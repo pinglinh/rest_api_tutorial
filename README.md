@@ -4,8 +4,11 @@ This is a tutorial followed from the [Net Ninja](https://www.thenetninja.co.uk/)
 
 ## Instructions
 
-1. Make sure you have **Node.js** and **npm** installed on your local machine. The versions I have on my machine at the time of this project are **v8.9.4** and **v5.6.0** respectively.
+1. Make sure you have **Node.js**, **npm** and **MongoDB** installed on your local machine. The versions I have on my machine at the time of this project are **v8.9.4** and **v5.6.0** respectively.
 2. Clone the repo to your local machine and navigate to the route of the project.
 3. Run `npm install`
 4. Run `node index.js`
-5. Locate to `locahost:4000`
+5. Run:
+  * Windows: `"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe"`
+  * Mac: `mongod`
+6. Locate to `locahost:4000`
