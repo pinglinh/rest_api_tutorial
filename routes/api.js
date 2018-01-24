@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Ninja = require("../models/ninja");
 //get a list of ninjas from the db
-router.get("/ninjas", function(req, res) {
+router.get("/ninjas", function(req, res, next) {
   res.send({ type: "GET" });
 });
 
@@ -15,19 +15,19 @@ router.get("/ninjas", function(req, res) {
 // once it is, is going to research what the ninja has saved to the db
 // then the function is going to fire with the response with that ninja
 // this send back the JSON to the user - so that it knows everything has been successful
-router.post("/ninjas", function(req, res) {
+router.post("/ninjas", function(req, res, next) {
   Ninja.create(req.body).then(function(ninja) {
     res.send(ninja);
-  });
+  }).catch(next);
 });
 
 // update a ninja in the db
-router.put("/ninjas/:id", function(req, res) {
+router.put("/ninjas/:id", function(req, res, next) {
   res.send({ type: "PUT" });
 });
 
 // delete a ninja in the db
-router.delete("/ninjas/:id", function(req, res) {
+router.delete("/ninjas/:id", function(req, res, next) {
   res.send({ type: "DELETE" });
 });
 
