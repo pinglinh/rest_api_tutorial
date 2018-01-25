@@ -1,6 +1,7 @@
 const express = require("express");
-const bodyParser = require("body-Parser");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const port = process.env.port || 4000
 
 // set up express app
 const app = express();
@@ -23,6 +24,6 @@ app.use(function(err, req, res, next) {
 });
 
 // listen for request
-app.listen(process.env.port || 4000, function() {
-  console.log("now listening for request");
+app.listen(port, () => {
+  console.log("now listening for request on " + port);
 });
