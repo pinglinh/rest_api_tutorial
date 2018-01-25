@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="style.css" type="text/css">
-
   <title>Ninjago</title>
 </head>
 
@@ -19,66 +18,67 @@
   </div>
 
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-  <script src="https://unpkg.com/react@15/dist/react.js"></script>
-  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 
-  <!-- Create React component !-->
 
-  <script type="text/babel">
-  const Ninjas = React.createClass({
-
-  getInitialState: function() {
-    return({
+<script type="text/babel">
+class Ninjas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       ninjas: []
-    });
-  },
+    };
+  }
 
-  render: function() {
+  handleSubmit(e) {
+    e.preventDefault();
+    let lng = this.refs.lng.value;
+    let lat = this.refs.lat.value;
+
+    fetch(`/api/ninjas?lng=${lng}&lat=${lat}`)
+      .then(data => {
+        return data.json();
+      })
+      .then(json => {
+        this.setState({
+          ninjas: json
+        });
+      });
+  }
+
+  render() {
     let ninjas = this.state.ninjas;
+
     ninjas = ninjas.map((ninja, index) => {
-      return(
+      return (
         <li key={index}>
-          // <span className={ninja.obj.available}></span>
           <span className="name">{ninja.obj.name}></span>
           <span className="rank">{ninja.obj.rank}</span>
-          <span className="dist">{Math.floor(ninja.dis/1000)} km</span>
+          <span className="dist">{Math.floor(ninja.dis / 1000)} km</span>
         </li>
       );
     });
+
     return (
       <div id="ninja-container">
-        <form id="search" onSubmit={this.handleSubmit}>
+        <form id="search" onSubmit={this.handleSubmit.bind(this)}>
           <label>Enter your latitude</label>
           <input type="text" ref="lat" placeholder="latitude" required />
           <label>Enter your longitude</label>
           <input type="text" ref="lng" placeholder="longitude" required />
           <input type="submit" value="Find Ninjas" />
         </form>
-        <ul>
-        {ninjas}
-        </ul>
+        <ul>{ninjas}</ul>
       </div>
     );
-  },
-  handleSubmit: e => {
-    e.preventDefault();
-    const lng = this.refs.lng.value;
-    const lat = this.refs.lat.value;
-
-    fetch(`/api/ninjas?lng=${lng}&lat=${lat}`)
-    .then(data => {
-      return data.json()
-    })
-    .then(json => {
-      this.setState({
-        ninjas: json
-      })
-    })
   }
-});
+}
 
-ReactDOM.render(<Ninjas />, document.getElementById("ninjas"))
-
+ReactDOM.render(<Ninjas />, document.getElementById("ninjas"));
 </script>
+
+
+
 </body>
 </html>
